@@ -23,7 +23,7 @@ fileInput.addEventListener("change", async e=>{
   if(!["image/jpeg","image/png","image/webp"].includes(file.type)){alert("فرمت فایل پشتیبانی نمی‌شود.");return;}
   const url=URL.createObjectURL(file); const img=new Image();
   img.onload=()=>{
-    if(img.naturalWidth*img.naturalHeight>8000000){URL.revokeObjectURL(url);alert("ابعاد عکس بیش از ۸ مگاپیکسل است.");return;}
+    if(img.naturalWidth*img.naturalHeight>16000000){URL.revokeObjectURL(url);alert("ابعاد عکس بیش از ۱۶ مگاپیکسل است.");return;}
     originalFile=file; originalImage=img;
     photoCanvas.width=maskCanvas.width=img.naturalWidth;
     photoCanvas.height=maskCanvas.height=img.naturalHeight;

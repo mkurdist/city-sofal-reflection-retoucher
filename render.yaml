@@ -12,7 +12,7 @@ services:
       - key: MAX_UPLOAD_MB
         value: 10
       - key: MAX_IMAGE_PIXELS
-        value: 8000000
+        value: 16000000
       - key: RATE_LIMIT_COUNT
         value: 8
       - key: RATE_LIMIT_WINDOW_SECONDS

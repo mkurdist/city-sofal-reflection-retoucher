@@ -14,7 +14,7 @@ from PIL import Image, ImageOps
 
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 MAX_UPLOAD_BYTES = int(os.getenv("MAX_UPLOAD_MB", "10")) * 1024 * 1024
-MAX_PIXELS = int(os.getenv("MAX_IMAGE_PIXELS", "8000000"))
+MAX_PIXELS = int(os.getenv("MAX_IMAGE_PIXELS", "16000000"))
 RATE_LIMIT_COUNT = int(os.getenv("RATE_LIMIT_COUNT", "8"))
 RATE_LIMIT_WINDOW = int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", "3600"))
 MAX_WEB_SIDE = int(os.getenv("WEB_MAX_SIDE", "1800"))
