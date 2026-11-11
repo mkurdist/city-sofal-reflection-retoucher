@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171717">
+  <title>City Sofal | Reflection Retoucher</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">CS</div>
+    <div><strong>سیتی سفال</strong><span>Reflection Retoucher</span></div>
+  </div>
+  <span class="beta">نسخه آزمایشی عمومی</span>
+</header>
+
+<main class="container">
+  <section class="intro">
+    <p class="eyebrow">PRODUCT PHOTO WORKFLOW</p>
+    <h1>حذف انعکاس مزاحم، بدون قربانی کردن براقیت لعاب</h1>
+    <p class="sub">انعکاس عکاس و محیط را انتخاب کنید؛ هایلایت‌های طبیعی لعاب را محافظت کنید و خروجی را با عکس اصلی مقایسه کنید.</p>
+  </section>
+
+  <section class="panel upload-panel" id="uploadPanel">
+    <div class="upload-icon">↑</div>
+    <h2>عکس محصول را انتخاب کنید</h2>
+    <p>JPG، PNG یا WebP · حداکثر ۱۰ مگابایت · حداکثر ۸ مگاپیکسل</p>
+    <label class="primary-btn" for="fileInput">انتخاب عکس</label>
+    <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp">
+    <p class="privacy-note">فایل‌ها فقط برای پردازش موقت استفاده می‌شوند و در این نسخه گالری یا فضای ذخیره‌سازی دائمی نداریم.</p>
+  </section>
+
+  <section id="editor" class="hidden">
+    <div class="toolbar panel">
+      <div class="tool-group">
+        <button class="tool active" data-tool="remove"><i class="dot red"></i> انتخاب انعکاس</button>
+        <button class="tool" data-tool="protect"><i class="dot blue"></i> محافظت از براقیت</button>
+        <button class="tool" data-tool="erase">پاک‌کن ماسک</button>
+      </div>
+      <label class="brush-control">اندازه قلم‌مو <input id="brushSize" type="range" min="5" max="100" value="28"><output id="brushValue">28</output></label>
+      <button id="clearMask" class="secondary-btn">پاک کردن ماسک‌ها</button>
+    </div>
+
+    <div class="work-grid">
+      <section class="panel image-panel">
+        <div class="panel-heading"><div><h2>انتخاب ناحیه</h2><p>فقط روی انعکاس‌های مزاحم بکشید.</p></div><span class="step">01</span></div>
+        <div id="stage" class="stage">
+          <canvas id="photoCanvas"></canvas>
+          <canvas id="maskCanvas"></canvas>
+        </div>
+        <div class="legend"><span><i class="dot red"></i> حذف شود</span><span><i class="dot blue"></i> محافظت شود</span></div>
+      </section>
+
+      <section class="panel settings-panel">
+        <div class="panel-heading"><div><h2>تنظیم پردازش</h2><p>پردازش پایه با OpenCV انجام می‌شود.</p></div><span class="step">02</span></div>
+        <label>نوع خروجی
+          <select id="outputMode">
+            <option value="original">کیفیت اصلی – PNG</option>
+            <option value="web">بهینه برای سایت – WebP</option>
+            <option value="both">هر دو خروجی – ZIP</option>
+          </select>
+        </label>
+        <label>روش بازسازی
+          <select id="method"><option value="telea">Telea – مناسب نواحی کوچک</option><option value="ns">Navier-Stokes</option></select>
+        </label>
+        <label>شعاع بازسازی <output id="radiusValue">3</output>
+          <input id="radius" type="range" min="1" max="8" value="3">
+        </label>
+        <label class="check"><input id="autoProtect" type="checkbox" checked> محافظت خودکار از نقاط بسیار روشن</label>
+        <div class="callout"><strong>نکته مهم</strong><p>هایلایت‌های سفید و خطوط نور طبیعی را با قلم آبی محافظت کنید. الگوریتم نمی‌تواند در تمام تصاویر انعکاس انسان را بی‌خطا از بازتاب لعاب تشخیص دهد.</p></div>
+        <button id="processBtn" class="primary-btn full">پردازش و دریافت خروجی</button>
+        <p id="status" class="status" aria-live="polite">آماده پردازش</p>
+      </section>
+    </div>
+
+    <section id="resultPanel" class="panel result-panel hidden">
+      <div class="panel-heading"><div><h2>مقایسه نتیجه</h2><p>مقایسه قبل و بعد برای ارزیابی تغییرات.</p></div><span class="step">03</span></div>
+      <div class="compare" id="compare">
+        <img id="afterImage" alt="تصویر اصلاح‌شده">
+        <div class="before-clip" id="beforeClip"><img id="beforeImage" alt="تصویر اصلی"></div>
+        <div class="compare-line" id="compareLine"><span>↔</span></div>
+        <input id="compareRange" type="range" min="0" max="100" value="50" aria-label="مقایسه قبل و بعد">
+      </div>
+      <div class="compare-labels"><span>قبل</span><span>بعد</span></div>
+      <div class="result-actions">
+        <button id="downloadAgain" class="primary-btn">دریافت خروجی انتخاب‌شده</button>
+        <button id="newPhoto" class="secondary-btn">ویرایش عکس دیگر</button>
+      </div>
+    </section>
+  </section>
+
+  <footer><span>City Sofal · ابزار روتوش اختصاصی محصولات</span><span>نسخه 1.0 · Public Beta</span></footer>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

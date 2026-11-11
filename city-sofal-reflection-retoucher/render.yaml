@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: city-sofal-reflection-retoucher
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: MAX_UPLOAD_MB
+        value: 10
+      - key: MAX_IMAGE_PIXELS
+        value: 8000000
+      - key: RATE_LIMIT_COUNT
+        value: 8
+      - key: RATE_LIMIT_WINDOW_SECONDS
+        value: 3600
+      - key: WEB_MAX_SIDE
+        value: 1800
+      - key: ENABLE_LAMA
+        value: false
